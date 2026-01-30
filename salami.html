@@ -1,11 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Matoppskrift</title>
+    <style>
+        :root{
+            --bg: rgb(249,218,207);
+            --accent-1: rgb(97,36,36);
+            --accent-2: rgb(97,43,43);
+            --container: 900px;
+        }
+        body{font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; padding:0; background:#fff; color:#222}
+        .container{max-width:var(--container); margin:0 auto; padding:16px}
+        h1,h2,h3{ text-align:center; margin:0.5rem 0 }
+        p{ text-align:center; line-height:1.4 }
+        img{ max-width:100%; height:auto; display:block; margin:8px auto }
+        section{ background-color:var(--bg); padding:12px; margin:12px 0; border-radius:8px }
+        .highlightColor1{ color:var(--accent-1) }
+        .highlightColor2{ color:var(--accent-2) }
+        .intro{ max-width:60ch; margin:0.75rem auto }
+        ul{ max-width:40ch; margin:0.5rem auto; padding-left:1.25rem }
+        ol{ max-width:60ch; margin:0.5rem auto; padding-left:1.25rem }
+        .button{ display:inline-block; text-decoration:none; background:var(--accent-2); color:#fff; padding:12px 18px; border-radius:6px; font-weight:600 }
+        .hero img{ border-radius:8px }
+        /* comments styles (basic) */
+        .comments { max-width:60ch; margin:0.75rem auto; padding:12px; background:#fff; border-radius:8px }
+        .comments input[type="text"], .comments textarea { width:100%; padding:8px; border:1px solid #ddd; border-radius:6px; font-size:1rem }
+        .comments textarea { min-height:100px; resize:vertical }
+        .comment { background:#fff7f5; border-radius:6px; padding:8px; margin:8px 0 }
+        .comment .meta { font-size:0.85rem; color:var(--accent-1); margin-bottom:6px }
+    </style>
 </head>
+
 <body>
-    <p>hei</p>
+    <main class="container">
+        <section class="hero" aria-label="Bilde av ferdig brødskive med salami">
+            <img src="3-havrebrodskive-med-salami.jpg" alt="Havrebrødskive med salami">
+        </section>
+
+        <section>
+            <h1 class="highlightColor2">Hvordan lage en skive med salami</h1>
+            <p class="intro highlightColor1">Denne brødskiven er en tidløs favoritt som passer perfekt til både frokost, lunsj og som en rask snack. Med et lag smør og noen skiver salami får du en enkel, men smakfull kombinasjon. Den er rask å lage, og kan lett tilpasses med ekstra pålegg som agurk, paprika eller litt pepper.</p>
+        </section>
+
+        <section>
+            <h2 class="highlightColor2">Dette trenger du</h2>
+            <ul class="highlightColor1">
+                <li>Brød</li>
+                <li>Salami</li>
+                <li>Smør</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="highlightColor2">Fremgangsmåte</h2>
+            <ol class="highlightColor1">
+                <li>
+                    Start med å skjære opp brødet til ønsket tykkelse.
+                    <figure>
+                        <img src="kutte_brld_40.jpg" alt="Skjæring av brød">
+                    </figure>
+                </li>
+                <li>
+                    Smør et jevnt lag smør over hele skiven.
+                    <figure>
+                        <img src="smring__1_50.jpg" alt="Smøre brødskive med smør">
+                    </figure>
+                </li>
+                <li>
+                    Legg salamiskivene pent oppå smøret.
+                    <figure>
+                        <img src="ChatGPT_Image_19._jan._2026_13_57_15_800x533.png" alt="Salamiskiver på brødskive">
+                    </figure>
+                </li>
+            </ol>
+        </section>
+
+        <section style="text-align:center;">
+            <a class="button" href="https://meny.no/delt-handlevogn/?id=eed2c09c-727f-4706-8e86-e0b2699a01e2" target="_blank" rel="noopener noreferrer">Trykk her for handlelisten</a>
+        </section>
+        <section class="comments" aria-label="Kommentarer">
+            <h2 class="highlightColor2">Kommentarer</h2>
+            <div>
+                <input id="comment-name" type="text" placeholder="Ditt navn (valgfritt)">
+            </div>
+            <div style="margin-top:8px">
+                <textarea id="comment-text" placeholder="Skriv en kommentar..."></textarea>
+            </div>
+            <div style="margin-top:8px; text-align:center">
+                <button type="button" id="comment-submit" onclick="addComment()" class="button">Legg til kommentar</button>
+            </div>
+            <div id="comments-list" style="margin-top:12px"></div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+    saveToStorage();
+      showItems();
 </body>
 </html>
