@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Ineventory</title>
+
+    <style>
+        /*css utsende*/
+        body {
+            background-color: rgb(1, 89, 10);
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .row {
+            display: ruby;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            width: 200px;
+
+        }
+
+        button {
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            background-color: rgb(31, 33, 32);
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: rgb(33, 34, 33);
+        }
+
+        /*Minercaft-ish-slots*/
+        #inventoryGrid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .slot {
+            background-color: azure;
+            border-radius: 8px;
+            padding: 6px;
+            height: 110px;
+            position: relative;
+            box-shadow: inset 2px 2px 0 rgba(255, 255, 255, .6), inset -2px -2px 0 rgba(0, 0, 0, .6);
+        }
+
+        .slotInner {
+            background-color: azure;
+            border-radius: 6px;
+            height: 100%;
+            padding: 8px;
+            box-shadow: inset 2px 2px 0 black, inset -2px -2px 0 black;
+        }
+
+        .itemIcon {
+            font-size: 12px;
+            text-align: center;
+            margin-top: 6px;
+        }
+
+        .itemqty {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            font-weight: bold;
+
+        }
+
+        .itemname {
+            font-size: 12px;
+            text-align: center;
+            margin-top: 6px;
+            word-break: break-word;
+        }
+
+        .smallBtn {
+            font-size: 11px;
+            padding: 6px 8px;
+            border-radius: 6px;
+            margin-top: 6px;
+            width: 48%;
+        }
+
+        .editBtn {
+            background-color: orange;
+        }
+
+        .deleteBtn {
+            background-color: red;
+        }
+
+        .editBtn:hover {
+            background-color: orange;
+        }
+
+        .deleteBtn:hover {
+            background-color: red;
+        }
+
+        #infoText {
+            margin-top: 10px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="container">
+        <h1>🔨Minecraft Inventory</h1>
+
+        <p id="infoText">Legg til items og se dem dukke opp i inventoryen.</p>
+
+        <div class="row">
+            <input id="itemName" type="text" placeholder="Item navn" />
+            <input id="itemQty" type="number" placeholder="Antall" />
+            <button onclick="addItem()">Legg til</button>
+            <button onclick="toggleInventory()">Skjul inventory</button>
+        </div>
+
+        <div id="inventoryBox">
+            <div id="inventoryGrid"></div>
+        </div>
+
+    </div>
+
+    <script>
+        let items = [];
+        let inventoryHidden = false;
+
+        loadFromStorage();
+        showItems();
+
+        function addItem() {
+            let name = document.getElementById("itemName").value;
+            let qty = document.getElementById("itemQty").value;
+
+            if (name === "" || qty === "") {
+                document.getElementById("infoText").innerHTML =
+                    "Du må skrive inn både navn og antall!";
+                return;
+            }
+            qty = Number(qty);
+
+            let found = false;
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].name.toLowerCase() === name.toLowerCase()) {
+                    items[i].qty = items[i].qty + qty;
+                    found = true;
+                }
+            }
+
+            if (found === false) {
+                let newItem = {
+                    id: Date.now(),
+                    name: name,
+                    qty: qty
+                };
+                items.push(newItem);
+            }
+
+            saveToStorage();
+            showItems();
+
+            document.getElementById("itemName").value = "";
+            document.getElementById("itemQty").value = "";
+
+            document.getElementById("infoText").innerHTML = "Item lagt til!";
+        }
+
+        function toggleInventory() {
+            inventoryHidden = !inventoryHidden;
+
+            let box = document.getElementById("inventoryBox");
+
+            if (inventoryHidden === true) {
+                box.style.display = "none";
+                document.getElementById("infoText").innerHTML = "Inventory er skjult. Trykk 'Vis inventory' ved å trykke knappen igjen"
+            } else {
+                box.style.display = "block";
+                document.getElementById("infoText").innerHTML = "Inventory er synlig";
+            }
+            let buttons = document.getElementsByTagName("button");
+            if (inventoryHidden === true) {
+                buttons[1].innerHTML = "Vis inventory";
+            }
+        }    
+
+        function showItems() {
+            let html="";
+
+            if (items.length === 0) {
+                html="<p>Ingen items enda.<p>";
+                document.getElementById("inventoryGrid").innerHTML =html;
+                return;
+            }
+        }
+
+        for (let i=0; i< items.length;i++){
+            let icon=pickIcon(items[i].name);
+
+            html+=`
+            <div> class="slot">
+                <div class="slotInner">
+                    <div class="itemIcon">${icon}</div>
+                    <div class="itemName">${items[i].name}</div>
+
+                    
+
+
+        }
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
